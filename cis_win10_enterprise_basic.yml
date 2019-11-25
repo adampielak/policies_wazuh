@@ -1,5 +1,5 @@
 # Security Configuration Assessment
-# CIS Checks for Windows 10 Enterprise L1
+# CIS Checks for Windows 10 Enterprise Basic
 # Copyright (C) 2015-2019, Wazuh Inc.
 #
 # This program is free software; you can redistribute it
@@ -11,16 +11,16 @@
 # Center for Internet Security Benchmark v1.5.0 for Microsoft Windows 10 Release 1803 v1.5.0 - 03-06-2019
 
 policy:
-  id: "cis_win10_enterprise_L1"
-  file: "cis_win10_enterprise_L1.yml"
+  id: "cis_win10_enterprise_basic"
+  file: "cis_win10_enterprise_basic.yml"
   name: "CIS benchmark for Windows 10 Enterprise (Release 1803)"
-  description: "This document provides prescriptive guidance for establishing a secure configuration posture for Microsoft Windows (L1)."
+  description: "This document provides prescriptive guidance for establishing a secure configuration posture for Microsoft Windows (Basic)."
   references:
     - https://www.cisecurity.org/cis-benchmarks/
 
 requirements:
   title: "Check that the Windows platform is Windows 10"
-  description: "Requirements for running the CIS benchmark Domain Controller L1 under Windows 10"
+  description: "Requirements for running the CIS benchmark Domain Controller Basic under Windows 10"
   condition: all
   rules:
     - 'r:HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion -> ProductName -> r:^Windows 10'
