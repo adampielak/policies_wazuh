@@ -83,20 +83,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Lsa -> CrashOnAuditFail -> 0'
 
-  # - id: 13004
-  #   title: "Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators and Interactive Users'"
-  #   description: "This policy setting determines who is allowed to format and eject removable NTFS media. You can use this policy setting to prevent unauthorized users from removing data on one computer to access it on another computer on which they have local administrator privileges. The recommended state for this setting is: Administrators and Interactive Users."
-  #   rationale: "Users may be able to move data on removable disks to a different computer where they have administrative privileges. The user could then take ownership of any file, grant themselves full control, and view or modify any file. The fact that most removable storage devices will eject media by pressing a mechanical button diminishes the advantage of this policy setting."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Administrators and Interactive Users: Computer Configuration\\Policies\\Windows Settings\\Security Settings\\Local Policies\\Security Options\\Devices: Allowed to format and eject removable media."
-  #   compliance:
-  #     - cis: ["2.3.4.1"]
-  #     - cis_csc: ["5.1"]
-  #   references:
-  #     - 'CCE-34355-8'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon -> AllocateDASD -> 0'
-
   - id: 13005
     title: "Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'"
     description: "This policy setting determines whether all secure channel traffic that is initiated by the domain member must be signed or encrypted. The recommended state for this setting is: Enabled."
@@ -266,20 +252,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanWorkstation\Parameters -> EnablePlainTextPassword -> 0'
 
-  # - id: 13017
-  #   title: "Ensure 'Microsoft network server: Amount of idle time required before suspending session' is set to '15 or fewer minute(s)'"
-  #   description: "This policy setting allows you to specify the amount of continuous idle time that must pass in an SMB session before the session is suspended because of inactivity. Administrators can use this policy setting to control when a computer suspends an inactive SMB session. If client activity resumes, the session is automatically reestablished. A value of 0 appears to allow sessions to persist indefinitely. The maximum value is 99999, which is over 69 days; in effect, this value disables the setting. The recommended state for this setting is: 15 or fewer minute(s), but not 0."
-  #   rationale: "Each SMB session consumes server resources, and numerous null sessions will slow the server or possibly cause it to fail. An attacker could repeatedly establish SMB sessions until the server's SMB services become slow or unresponsive."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to 15 or fewer minute(s), but not 0: Computer Configuration\\Policies\\Windows Settings\\Security Settings\\Local Policies\\Security Options\\Microsoft network server: Amount of idle time required before suspending session."
-  #   compliance:
-  #     - cis: ["2.3.9.1"]
-  #     - cis_csc: ["3"]
-  #   references:
-  #     - 'CCE-34909-2'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters -> AutoDisconnect -> n:^(\d+) compare <= 15'
-
   - id: 13018
     title: "Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'"
     description: "This policy setting determines whether packet signing is required by the SMB server component. Enable this policy setting in a mixed environment to prevent downstream clients from using the workstation as a network server. The recommended state for this setting is: Enabled."
@@ -321,20 +293,6 @@ checks:
     condition: all
     rules:
       - 'r:HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters -> EnableForcedLogOff -> 1'
-
-  # - id: 13021
-  #   title: "Ensure 'Microsoft network server: Server SPN target name validation level' is set to 'Accept if provided by client' or higher"
-  #   description: "This policy setting controls the level of validation a computer with shared folders or printers (the server) performs on the service principal name (SPN) that is provided by the client computer when it establishes a session using the server message block (SMB) protocol. The server message block (SMB) protocol provides the basis for file and print sharing and other networking operations, such as remote Windows administration. The SMB protocol supports validating the SMB server service principal name (SPN) within the authentication blob provided by a SMB client to prevent a class of attacks against SMB servers referred to as SMB relay attacks. This setting will affect both SMB1 and SMB2. The recommended state for this setting is: Accept if provided by client. Configuring this setting to Required from client also conforms to the benchmark."
-  #   rationale: "The identity of a computer can be spoofed to gain unauthorized access to network resources."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Accept if provided by client (configuring to Required from client also conforms to the benchmark): Computer Configuration\\Policies\\Windows Settings\\Security Settings\\Local Policies\\Security Options\\Microsoft network server: Server SPN target name validation level."
-  #   compliance:
-  #     - cis: ["2.3.9.5"]
-  #     - cis_csc: ["14"]
-  #   references:
-  #     - 'CCE-35299-7'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters -> SMBServerNameHardeningLevel -> n:^(\d+) compare >= 1'
 
   - id: 13022
     title: "Ensure 'Network access: Do not allow anonymous enumeration of SAM accounts' is set to 'Enabled'"
@@ -711,20 +669,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System -> ConsentPromptBehaviorUser -> 0'
 
-  # - id: 13049
-  #   title: "Ensure 'User Account Control: Detect application installations and prompt for elevation' is set to 'Enabled'"
-  #   description: "This policy setting controls the behavior of application installation detection for the computer. The recommended state for this setting is: Enabled."
-  #   rationale: "Some malicious software will attempt to install itself after being given permission to run. For example, malicious software with a trusted application shell. The user may have given permission for the program to run because the program is trusted, but if they are then prompted for installation of an unknown component this provides another way of trapping the software before it can do damage."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Computer Configuration\\Policies\\Windows Settings\\Security Settings\\Local Policies\\Security Options\\User Account Control: Detect application installations and prompt for elevation."
-  #   compliance:
-  #     - cis: ["2.3.17.5"]
-  #     - cis_csc: ["5.1"]
-  #   references:
-  #     - 'CCE-35429-0'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System -> EnableInstallerDetection -> 1'
-
   - id: 13050
     title: "Ensure 'User Account Control: Only elevate UIAccess applications that are installed in secure locations' is set to 'Enabled'"
     description: "This policy setting controls whether applications that request to run with a User Interface Accessibility (UIAccess) integrity level must reside in a secure location in the file system. Secure locations are limited to the following: - …\\Program Files\\, including subfolders - …\\Windows\\system32\\ - …\\Program Files (x86)\\, including subfolders (for 64-bit versions of Windows) Note: Windows enforces a public key infrastructure (PKI) signature check on any interactive application that requests to run with a UIAccess integrity level regardless of the state of this security setting. The recommended state for this setting is: Enabled."
@@ -806,18 +750,6 @@ checks:
     rules:
       - 'not r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\IISADMIN'
       - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\IISADMIN -> Start -> 4'
-
-  # - id: 13056
-  #   title: "Ensure 'Infrared monitor service (irmon)' is set to 'Disabled'"
-  #   description: "Detects other Infrared devices that are in range and launches the file transfer application. The recommended state for this setting is: Disabled."
-  #   rationale: "Infrared connections can potentially be a source of data compromise - especially via the automatic \"file transfer application\" functionality. Enterprise-managed systems should utilize a more secure method of connection than infrared."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to: Disabled. Computer Configuration\\Policies\\Windows Settings\\Security Settings\\System Services\\Infrared monitor service"
-  #   compliance:
-  #     - cis: ["5.7"]
-  #     - cis_csc: ["9.1", "9.2"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\irmon -> Start -> 4'
 
   - id: 13057
     title: "Ensure 'Internet Connection Sharing (ICS) (SharedAccess) ' is set to 'Disabled'"
@@ -981,18 +913,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\XboxGipSvc -> Start -> 4'
 
-  # - id: 13070
-  #   title: "Ensure 'Xbox Game Monitoring (xbgm)' is set to 'Disabled'"
-  #   description: "This service supports Xbox Game Monitoring. The recommended state for this setting is: Disabled."
-  #   rationale: "Xbox Live is a gaming service and has no place in an enterprise managed environment (perhaps unless it is a gaming company)."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to: Disabled. Computer Configuration\\Policies\\Windows Settings\\Security Settings\\System Services\\Xbox Game Monitoring"
-  #   compliance:
-  #     - cis: ["5.42"]
-  #     - cis_csc: ["9.1", "9.2"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\xbgm -> Start -> 4'
-
   - id: 13071
     title: "Ensure 'Xbox Live Auth Manager (XblAuthManager)' is set to 'Disabled'"
     description: "Provides authentication and authorization services for interacting with Xbox Live. The recommended state for this setting is: Disabled."
@@ -1016,18 +936,6 @@ checks:
     condition: all
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\XblGameSave -> Start -> 4'
-
-  # - id: 13073
-  #   title: "Ensure 'Xbox Live Networking Service (XboxNetApiSvc)' is set to 'Disabled'"
-  #   description: "This service supports the Windows.Networking.XboxLive application programming interface. The recommended state for this setting is: Disabled."
-  #   rationale: "Xbox Live is a gaming service and has no place in an enterprise managed environment (perhaps unless it is a gaming company)."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to: Disabled. Computer Configuration\\Policies\\Windows Settings\\Security Settings\\System Services\\Xbox Live Networking Service"
-  #   compliance:
-  #     - cis: ["5.45"]
-  #     - cis_csc: ["9.1", "9.2"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\XboxNetApiSvce -> Start -> 4'
 
 # 9 Windows Firewall with Advanced Security
   - id: 13074
@@ -1432,18 +1340,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\InputPersonalization -> AllowInputPersonalization -> 0'
 
-  # - id: 13103
-  #   title: "Ensure LAPS AdmPwd GPO Extension / CSE is installed"
-  #   description: "In May 2015, Microsoft released the Local Administrator Password Solution (LAPS) tool, which is free and supported software that allows an organization to automatically set randomized and unique local Administrator account passwords on domain-attached workstations and Member Servers. The passwords are stored in a confidential attribute of the domain computer account and can be retrieved from Active Directory by approved Sysadmins when needed. The LAPS tool requires a small Active Directory Schema update in order to implement, as well as installation of a Group Policy Client Side Extension (CSE) on targeted computers. Please see the LAPS documentation for details. LAPS supports Windows Vista or newer workstation OSes, and Server 2003 or newer server OSes. LAPS does not support standalone computers - they must be joined to a domain. Note: Organizations that utilize 3rd-party commercial software to manage unique & complex local Administrator passwords on domain members may opt to disregard these LAPS recommendations. Note #2: LAPS is only designed to manage local Administrator passwords, and is therefore not recommended (or supported) for use directly on Domain Controllers, which do not have a traditional local Administrator account. We strongly encourage you to only deploy the LAPS CSE and LAPS GPO settings to member servers and workstations."
-  #   rationale: "Due to the difficulty in managing local Administrator passwords, many organizations choose to use the same password on all workstations and/or Member Servers when deploying them. This creates a serious attack surface security risk because if an attacker manages to compromise one system and learn the password to its local Administrator account, then they can leverage that account to instantly gain access to all other computers that also use that password for their local Administrator account."
-  #   remediation: "In order to utilize LAPS, a minor Active Directory Schema update is required, and a Group Policy Client Side Extension (CSE) must be installed on each managed computer. When LAPS is installed, the file AdmPwd.dll must be present in the following location and registered in Windows (the LAPS AdmPwd GPO Extension / CSE installation does this for you): C:\\Program Files\\LAPS\\CSE\\AdmPwd.dll"
-  #   compliance:
-  #     - cis: ["18.2.1"]
-  #     - cis_csc: ["16.9"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GPExtensions\{D76B9641-3288-4f75-942D-087DE603E3EA} -> DllName -> C:\\Program Files\\LAPS\\CSE\\AdmPwd.dll'
-
   - id: 13104
     title: "Ensure 'Do not allow password expiration time longer than required by policy' is set to 'Enabled'"
     description: "In May 2015, Microsoft released the Local Administrator Password Solution (LAPS) tool, which is free and supported software that allows an organization to automatically set randomized and unique local Administrator account passwords on domain-attached workstations and Member Servers. The passwords are stored in a confidential attribute of the domain computer account and can be retrieved from Active Directory by approved Sysadmins when needed. The LAPS tool requires a small Active Directory Schema update in order to implement, as well as installation of a Group Policy Client Side Extension (CSE) on targeted computers. Please see the LAPS documentation for details. LAPS supports Windows Vista or newer workstation OSes, and Server 2003 or newer server OSes. LAPS does not support standalone computers - they must be joined to a domain. The recommended state for this setting is: Enabled. Note: Organizations that utilize 3rd-party commercial software to manage unique & complex local Administrator passwords on domain members may opt to disregard these LAPS recommendations. Note #2: LAPS is only designed to manage local Administrator passwords, and is therefore not recommended (or supported) for use directly on Domain Controllers, which do not have a traditional local Administrator account. We strongly encourage you to only deploy the LAPS CSE and LAPS GPO settings to member servers and workstations."
@@ -1518,18 +1414,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -> LocalAccountTokenFilterPolicy -> 0'
 
-  # - id: 13110
-  #   title: "Ensure 'Configure SMB v1 client driver' is set to 'Enabled: Disable driver'"
-  #   description: "This setting configures the start type for the Server Message Block version 1 (SMBv1) client driver service (MRxSmb10), which is recommended to be disabled. The recommended state for this setting is: Enabled: Disable driver. Note: Do not, under any circumstances, configure this overall setting as Disabled, as doing so will delete the underlying registry entry altogether, which will cause serious problems."
-  #   rationale: "Since September 2016, Microsoft has strongly encouraged that SMBv1 be disabled and no longer used on modern networks, as it is a 30 year old design that is much more vulnerable to attacks then much newer designs such as SMBv2 and SMBv3."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Disable driver: Computer Configuration\\Policies\\Administrative Templates\\MS Security Guide\\Configure SMB v1 client driver."
-  #   compliance:
-  #     - cis: ["18.3.2"]
-  #     - cis_csc: ["9.1", "9.2"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mrxsmb10 -> Start -> 4'
-
   - id: 13111
     title: "Ensure 'Configure SMB v1 server' is set to 'Disabled'"
     description: "This setting configures the server-side processing of the Server Message Block version 1 (SMBv1) protocol. The recommended state for this setting is: Disabled."
@@ -1541,72 +1425,6 @@ checks:
     condition: all
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters -> SMB1 -> 0'
-
-  # - id: 13112
-  #   title: "Ensure 'Enable Structured Exception Handling Overwrite Protection (SEHOP)' is set to 'Enabled'"
-  #   description: "Windows includes support for Structured Exception Handling Overwrite Protection (SEHOP). We recommend enabling this feature to improve the security profile of the computer. The recommended state for this setting is: Enabled."
-  #   rationale: "This feature is designed to block exploits that use the Structured Exception Handler (SEH) overwrite technique. This protection mechanism is provided at run-time. Therefore, it helps protect applications regardless of whether they have been compiled with the latest improvements, such as the /SAFESEH option."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Computer Configuration\\Policies\\Administrative Templates\\MS Security Guide\\Enable Structured Exception Handling Overwrite Protection (SEHOP)"
-  #   compliance:
-  #     - cis: ["18.3.4"]
-  #     - cis_csc: ["8.4", "8.3"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel -> DisableExceptionChainValidation -> 0'
-
-  # - id: 13113
-  #   title: "Ensure 'Turn on Windows Defender protection against Potentially Unwanted Applications' is set to 'Enabled'"
-  #   description: "Enabling this Windows Defender feature will protect against Potentially Unwanted Applications (PUA), which are sneaky unwanted application bundlers or their bundled applications to deliver adware or malware."
-  #   rationale: "This opt-in feature is free and could prevent malicious software from being installed."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Computer Configuration\\Policies\\Administrative Templates\\MS Security Guide\\Turn on Windows Defender protection against Potentially Unwanted Applications."
-  #   compliance:
-  #     - cis: ["18.3.5"]
-  #     - cis_csc: ["8.4", "8.3"]
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine -> MpEnablePus -> 1'
-
-  # - id: 13114
-  #   title: "Ensure 'WDigest Authentication' is set to 'Disabled'"
-  #   description: "When WDigest authentication is enabled, Lsass.exe retains a copy of the user's plaintext password in memory, where it can be at risk of theft. If this setting is not configured, WDigest authentication is disabled in Windows 8.1 and in Windows Server 2012 R2; it is enabled by default in earlier versions of Windows and Windows Server."
-  #   rationale: "Preventing the plaintext storage of credentials in memory may reduce opportunity for credential theft."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Disabled: Computer Configuration\\Policies\\Administrative Templates\\MS Security Guide\\WDigest Authentication (disabling may require KB2871997)"
-  #   compliance:
-  #     - cis: ["18.3.6"]
-  #     - cis_csc: ["16.14"]
-  #   references:
-  #     - 'CCE-35815-0'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest -> UseLogonCredential -> 0'
-
-  # - id: 13115
-  #   title: "Ensure 'MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended)' is set to 'Disabled'"
-  #   description: "This setting is separate from the Welcome screen feature in Windows XP and Windows Vista; if that feature is disabled, this setting is not disabled. If you configure a computer for automatic logon, anyone who can physically gain access to the computer can also gain access to everything that is on the computer, including any network or networks to which the computer is connected. Also, if you enable automatic logon, the password is stored in the registry in plaintext, and the specific registry key that stores this value is remotely readable by the Authenticated Users group."
-  #   rationale: "If you configure a computer for automatic logon, anyone who can physically gain access to the computer can also gain access to everything that is on the computer, including any network or networks that the computer is connected to. Also, if you enable automatic logon, the password is stored in the registry in plaintext. The specific registry key that stores this setting is remotely readable by the Authenticated Users group. As a result, this entry is appropriate only if the computer is physically secured and if you ensure that untrusted users cannot remotely see the registry."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Disabled: Computer Configuration\\Policies\\Administrative Templates\\MSS (Legacy)\\MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended)"
-  #   compliance:
-  #     - cis: ["18.4.1"]
-  #     - cis_csc: ["16"]
-  #   references:
-  #     - 'CCE-35438-1'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon -> AutoAdminLogon -> 0'
-
-  # - id: 13116
-  #   title: "Ensure 'MSS: (DisableIPSourceRouting IPv6) IP source routing protection level (protects against packet spoofing)' is set to 'Enabled: Highest protection, source routing is completely disabled'"
-  #   description: "IP source routing is a mechanism that allows the sender to determine the IP route that a datagram should follow through the network. The recommended state for this setting is: Enabled: Highest protection, source routing is completely disabled."
-  #   rationale: "An attacker could use source routed packets to obscure their identity and location. Source routing allows a computer that sends a packet to specify the route that the packet takes"
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Highest protection, source routing is completely disabled: Computer Configuration\\Policies\\Administrative Templates\\MSS (Legacy)\\MSS: (DisableIPSourceRouting IPv6) IP source routing protection level (protects against packet spoofing)"
-  #   compliance:
-  #     - cis: ["18.4.2"]
-  #     - cis_csc: ["9"]
-  #   references:
-  #     - 'CCE-33790-7'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters -> DisableIPSourceRouting -> 2'
 
   - id: 13117
     title: "Ensure 'MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing)' is set to 'Enabled: Highest protection, source routing is completely disabled'"
@@ -1649,34 +1467,6 @@ checks:
     condition: all
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters -> NoNameReleaseOnDemand -> 1'
-
-  # - id: 13120
-  #   title: "Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended)' is set to 'Enabled'"
-  #   description: "The DLL search order can be configured to search for DLLs that are requested by running processes in one of two ways: - Search folders specified in the system path first, and then search the current working folder. - Search current working folder first, and then search the folders specified in the system path. When enabled, the registry value is set to 1. With a setting of 1, the system first searches the folders that are specified in the system path and then searches the current working folder. When disabled the registry value is set to 0 and the system first searches the current working folder and then searches the folders that are specified in the system path. Applications will be forced to search for DLLs in the system path first. For applications that require unique versions of these DLLs that are included with the application, this entry could cause performance or stability problems. The recommended state for this setting is: Enabled."
-  #   rationale: "If a user unknowingly executes hostile code that was packaged with additional files that include modified versions of system DLLs, the hostile code could load its own versions of those DLLs and potentially increase the type and degree of damage the code can render."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Computer Configuration\\Policies\\Administrative Templates\\MSS (Legacy)\\MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended)"
-  #   compliance:
-  #     - cis: ["18.4.9"]
-  #     - cis_csc: ["8"]
-  #   references:
-  #     - 'CCE-34022-4'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager -> SafeDllSearchMode -> 1'
-
-  # - id: 13121
-  #   title: "Ensure 'MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires (0 recommended)' is set to 'Enabled: 5 or fewer seconds'"
-  #   description: "Windows includes a grace period between when the screen saver is launched and when the console is actually locked automatically when screen saver locking is enabled. The recommended state for this setting is: Enabled: 5 or fewer seconds."
-  #   rationale: "The default grace period that is allowed for user movement before the screen saver lock takes effect is five seconds. If you leave the default grace period configuration, your computer is vulnerable to a potential attack from someone who could approach the console and attempt to log on to the computer before the lock takes effect. An entry to the registry can be made to adjust the length of the grace period."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: 5 or fewer seconds: Computer Configuration\\Policies\\Administrative Templates\\MSS (Legacy)\\MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires (0 recommended)"
-  #   compliance:
-  #     - cis: ["18.4.10"]
-  #     - cis_csc: ["16.5"]
-  #   references:
-  #     - 'CCE-34619-7'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon -> ScreenSaverGracePeriod -> n:^(\d+) compare <= 5'
 
   - id: 13122
     title: "Ensure 'MSS: (WarningLevel) Percentage threshold for the security event log at which the system will generate a warning' is set to 'Enabled: 90% or less'"
@@ -1905,20 +1695,6 @@ checks:
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System -> EnableCdp -> 0'
 
-  # - id: 13139
-  #   title: "Ensure 'Turn off background refresh of Group Policy' is set to 'Disabled'"
-  #   description: "This policy setting prevents Group Policy from being updated while the computer is in use. This policy setting applies to Group Policy for computers, users and Domain Controllers."
-  #   rationale: "This setting ensures that group policy changes take effect more quickly, as compared to waiting until the next user logon or system restart."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Disabled: Computer Configuration\\Policies\\Administrative Templates\\System\\Group Policy\\Turn off background refresh of Group Policy"
-  #   compliance:
-  #     - cis: ["18.8.21.5"]
-  #     - cis_csc: ["3.7", "5.4", "5.5"]
-  #   references:
-  #     - 'CCE-35776-4'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -> DisableBkGndGroupPolicy -> 0'
-
   - id: 13140
     title: "Ensure 'Turn off downloading of print drivers over HTTP' is set to 'Enabled'"
     description: "This policy setting specifies whether to use the Store service for finding an application to open a file with an unhandled file type or protocol association. When a user opens a file type or protocol that is not associated with any applications on the computer, the user is given the choice to select a local application or use the Store service to find an application."
@@ -1932,20 +1708,6 @@ checks:
     condition: all
     rules:
       - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers -> DisableWebPnPDownload -> 1'
-
-  # - id: 13141
-  #   title: "Ensure 'Turn off printing over HTTP' is set to 'Enabled'"
-  #   description: "This policy setting allows you to disable the client computer's ability to print over HTTP, which allows the computer to print to printers on the intranet as well as the Internet."
-  #   rationale: "Information that is transmitted over HTTP through this capability is not protected and can be intercepted by malicious users. For this reason, it is not often used in enterprise managed environments."
-  #   remediation: "To establish the recommended configuration via GP, set the following UI path to Enabled: Computer Configuration\\Policies\\Administrative Templates\\System\\Internet Communication Management\\Internet Communication settings\\Turn off printing over HTTP"
-  #   compliance:
-  #     - cis: ["18.8.22.1.7"]
-  #     - cis_csc: ["13.1"]
-  #   references:
-  #     - 'CCE-33783-2'
-  #   condition: all
-  #   rules:
-  #     - 'r:HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers -> DisableHTTPPrinting -> 1'
 
   - id: 13142
     title: "Ensure 'Block user from showing account details on sign-in' is set to 'Enabled'"
